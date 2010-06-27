@@ -1,0 +1,39 @@
+/home/pablo/workspace/com.duboue.meetdle/bin:/home/pablo/eclipse/configuration/org.eclipse.osgi/bundles/403/1/.cp/lib/scala-library.jar:/home/pablo/eclipse/configuration/org.eclipse.osgi/bundles/403/1/.cp/lib/scala-dbc.jar:/home/pablo/eclipse/configuration/org.eclipse.osgi/bundles/403/1/.cp/lib/scala-swing.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/rhino.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/gnome-java-bridge.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/pulse-java.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-6-openjdk/jre/lib/ext/localedata.jar
+-------
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala
+-------
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Transaction$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifyOption$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Transaction$$anonfun$2.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifySelection$$anonfun$execute$2.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifySelection.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifySelection$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrCreatePoll$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifyOption.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrAddParticipant.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Transaction$$anonfun$1.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TransactionCounter$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Engine.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Engine$$anonfun$4.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrAddParticipant$$anonfun$execute$1.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrAddParticipant$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrCreatePoll.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Transaction.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/MalformedTransactionException.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TransactionCounter.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TrModifySelection$$anonfun$3.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/engine.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/TransactionLogger.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/OptionClass$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Selection$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Participant.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Participant$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/OptionClass.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Poll.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Selection.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Poll$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/SelectionClass$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Option$.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/Option.class
+/home/pablo/workspace/com.duboue.meetdle/src/com/duboue/meetdle/classes.scala -> /home/pablo/workspace/com.duboue.meetdle/bin/com/duboue/meetdle/SelectionClass.class
