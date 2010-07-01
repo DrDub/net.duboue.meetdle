@@ -27,5 +27,5 @@ object MemoryLogger extends TransactionLogger {
 	
 	def contains(poll: Int) = tsPerPoll.contains(poll)
 	
-	def allPolls = tsPerPoll.keySet
+	def allPolls = tsPerPoll.keySet.toList
 }

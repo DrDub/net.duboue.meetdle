@@ -4,7 +4,7 @@ import javax.servlet.http._
 
 class MeetdleServlet extends HttpServlet {
 	
-	val engine = new Engine(MemoryLogger)
+	val engine = new Engine(DataStorageLogger.getInstance())
 	
 	@throws(classOf[java.io.IOException])
     override def doGet(req: HttpServletRequest , resp: HttpServletResponse) = {
@@ -13,8 +13,8 @@ class MeetdleServlet extends HttpServlet {
         if(action==null)
         	resp.getWriter().println("Hello, world");
         else if(action.equals("dump")){
-        	for(p <- MemoryLogger.allPolls)
-        	  for(tr <- MemoryLogger.replay(p))
+        	for(p <- engine.getLogger.allPolls)
+        	  for(tr <- engine.getLogger.replay(p))
         		  resp.getWriter().println(tr.toString)
         } else if(action.equals("poll")){
         	val poll = engine(req.getParameter("id").toInt)
