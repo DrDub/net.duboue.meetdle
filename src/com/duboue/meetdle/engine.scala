@@ -27,18 +27,20 @@ class MalformedTransactionException(msg: String) extends java.lang.Exception(msg
 abstract sealed class Transaction{
 	val transactionId = TransactionCounter.inc
 	
-	def toTokens: List[String];
+	val poll: Int
+	
+	def toTokens: List[String]
 
 	@throws(classOf[com.duboue.meetdle.MalformedTransactionException])
-	def execute(e: Engine)
+	def execute(p: Poll): Poll
 }
 
 object Transaction{
 	val DIVIDER = "DIVIDER"
 	def apply(tokens: List[String]): Transaction = {
 		tokens match {
-			case "CreatePoll" :: id :: title :: description :: Nil => 
-			  return TrCreatePoll(id.toInt,title,description)
+			case "CreatePoll" :: poll :: title :: description :: Nil => 
+			  return TrCreatePoll(poll.toInt,title,description)
 			  
 			case "AddParticipant" :: poll :: alias :: Nil =>
 			   return TrAddParticipant(poll.toInt, alias)
@@ -52,22 +54,18 @@ object Transaction{
 				val (dimV,div2::sel) = r0.break(divider);
 				return TrModifyOption(poll.toInt,index.toInt, dim,dimV, sel)
 			}
+			case _ =>
+				throw new MalformedTransactionException("Can't parse: "+tokens)
 		}
 	}
 }
 
-case class TrCreatePoll(id: Int, title: String, description: String) extends Transaction{
-		def toTokens = id.toString :: title :: description :: Nil
+case class TrCreatePoll(poll: Int, title: String, description: String) extends Transaction{
+		def toTokens = poll.toString :: title :: description :: Nil
 		
-        def execute(e: Engine) =  {
+        def execute(p: Poll): Poll =  {
 			val now = java.lang.System.currentTimeMillis()
-			if(e.polls.contains(id)){
-				// modify title / description
-				val o = e.polls(id)
-				e.polls += id -> Poll(id,title,description,o.options,o.participants,o.selected,o.datePosted,now,transactionId)
-			}else{
-			    e.polls += id -> Poll(id,title,description,Nil,Nil,Nil,now,now,transactionId)
-			}
+            return Poll(poll,title,description,p.options,p.participants,p.selected,p.datePosted,now,transactionId)
 		}
 }
 
@@ -79,67 +77,64 @@ case class TrModifyOption(poll: Int, index: Int,
 		   dimensions ::: List(Transaction.DIVIDER) ::: dimensionValues ::: List(Transaction.DIVIDER) :::
 		   selectInto
 		   
-        def execute(e: Engine) =  {
+        def execute(p: Poll): Poll =  {
 			val now = java.lang.System.currentTimeMillis()
-			if(!e.polls.contains(poll))
+			if(p.revision == -1)
 				throw new MalformedTransactionException("Unknown poll "+poll)
 			 
-			val o = e.polls(poll)
 			val entry = Option(OptionClass(dimensions,SelectionClass(selectInto)),dimensionValues)
 			def newOptions : List[Option]= {
-			  if(o.options.length>index){
-				  val (l1,l2): Tuple2[List[Option],List[Option]]=o.options.splitAt(index)
+			  if(p.options.length>index){
+				  val (l1,l2): Tuple2[List[Option],List[Option]]=p.options.splitAt(index)
 				  return l1 ::: List(entry) ::: l2.tail
 			  }else{
-				  return o.options ::: List(entry)
+				  return p.options ::: List(entry)
 			  }
 			}
 			//TODO if the options change, so should the user's selections
-		    e.polls += poll -> Poll(poll,o.title,o.description,newOptions,
-		    		o.participants,o.selected,o.datePosted,now,transactionId)
+		    return Poll(poll,p.title,p.description,newOptions,
+		    		p.participants,p.selected,p.datePosted,now,transactionId)
 		}
 }
 
 case class TrAddParticipant(poll: Int, alias: String) extends Transaction{
 		def toTokens = poll.toString :: alias :: Nil	
 
-		def execute(e: Engine) =  {
+		def execute(p: Poll): Poll =  {
 			val now = java.lang.System.currentTimeMillis()
-			if(!e.polls.contains(poll))
+			if(p.revision == -1)
 				throw new MalformedTransactionException("Unknown poll "+poll)
 			 
-			val o = e.polls(poll)
-			if(!o.participants.find((x)=>x.alias.equals(alias)).isEmpty)
+			if(!p.participants.find((x)=>x.alias.equals(alias)).isEmpty)
 				throw new MalformedTransactionException("A participant with that alias already exists")
 			
-			e.polls += poll -> Poll(poll,o.title,o.description,o.options,
-		    		o.participants:::List(Participant(alias)),o.selected,o.datePosted,now,transactionId)
+			return Poll(poll,p.title,p.description,p.options,
+		    		p.participants:::List(Participant(alias)),p.selected,p.datePosted,now,transactionId)
 		}
 }
 
 case class TrModifySelection(poll: Int, alias: String, index: Int, selection: String)  extends Transaction{
     	def toTokens = poll.toString :: alias :: index.toString :: selection :: Nil	
 
-    	def execute(e: Engine) =  {
+    	def execute(p: Poll): Poll =  {
 			val now = java.lang.System.currentTimeMillis()
-			if(!e.polls.contains(poll))
+			if(p.revision == -1)
 				throw new MalformedTransactionException("Unknown poll "+poll)
 			 
-			val o = e.polls(poll)
-			o.participants.find((x)=>x.alias.equals(alias)) match {
+			p.participants.find((x)=>x.alias.equals(alias)) match {
 				case None => throw new MalformedTransactionException("Unknown participant")
 				case Some(participant) =>
-				  if(index>o.options.length)
+				  if(index>p.options.length)
 				 	  throw new MalformedTransactionException("Unknown option")
-				  val option = o.options(index)
+				  val option = p.options(index)
 				  if(!option.dimensionsFrom.selectInto.selections.contains(selection))
 				 	  throw new MalformedTransactionException("Unknown selection")
 				  val newEntry = List((participant,option,Selection(selection,option.dimensionsFrom.selectInto)))
 				   
-				  val(l0,l1) = o.selected.break((x)=>x._1 == participant && x._2.equals(option))
+				  val(l0,l1) = p.selected.break((x)=>x._1 == participant && x._2.equals(option))
 				  val l2 = if(l1.isEmpty) l1 else l1.tail;
-                  e.polls += poll -> Poll(poll,o.title,o.description,o.options,
-		    		         o.participants,l0:::newEntry:::l2,o.datePosted,now,transactionId)
+                  return Poll(poll,p.title,p.description,p.options,
+		    		         p.participants,l0:::newEntry:::l2,p.datePosted,now,transactionId)
 			}
 				
 			
@@ -147,9 +142,11 @@ case class TrModifySelection(poll: Int, alias: String, index: Int, selection: St
 }
 
 abstract class TransactionLogger {
-	def replay: Iterable[Transaction]
-
-	def log(tr: Transaction)
+	def replay(poll: Int): Iterable[Transaction]
+	
+	def log(poll: Int, tr: Transaction)
+	
+	def contains(poll: Int): Boolean
 }
 
 /**
@@ -159,16 +156,25 @@ abstract class TransactionLogger {
  * @author Pablo Duboue <pablo.duboue@gmail.com>
  */
 class Engine(logger: TransactionLogger) {
-    val polls: scala.collection.mutable.Map[Int,Poll] = new scala.collection.mutable.HashMap[Int,Poll]()
 	
-	for(tr<-logger.replay)
-       tr.execute(this)
+   def contains(poll: Int) = logger.contains(poll)
+   
+   def apply(poll: Int): Poll = {
+	    return logger.replay(poll).foldLeft(emptyPoll(poll))((p,t)=>t.execute(p))
+	}
+   
+   private def emptyPoll(poll: Int): Poll = {
+	   val now = java.lang.System.currentTimeMillis
+	   
+	   return Poll(poll,"","",Nil,Nil,Nil,now,now,-1)
+   }
        
- 	@throws(classOf[com.duboue.meetdle.MalformedTransactionException])
+   @throws(classOf[com.duboue.meetdle.MalformedTransactionException])
    def execute(tr:Transaction){
-		tr.execute(this)
-		// success? log
-		logger.log(tr)
+	   val poll = if(contains(tr.poll))this(tr.poll)else emptyPoll(tr.poll)
+	   tr.execute(poll)
+	   // success? log
+	   logger.log(tr.poll, tr)
 	}
 	
 }

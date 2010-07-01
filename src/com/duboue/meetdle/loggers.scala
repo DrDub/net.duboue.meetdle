@@ -10,11 +10,22 @@
 
 package com.duboue.meetdle
 
+import scala.collection.mutable.{Map,HashMap,Buffer,ArrayBuffer}
+
 object MemoryLogger extends TransactionLogger {
-	private var ts: scala.collection.mutable.Buffer[Transaction] = new scala.collection.mutable.ArrayBuffer[Transaction];
+	 private val tsPerPoll: Map[Int,Buffer[Transaction]] = new HashMap[Int,Buffer[Transaction]]()
 	
-	def replay = ts
+	def replay(poll: Int): Iterable[Transaction] =
+		 (if(tsPerPoll.contains(poll))tsPerPoll(poll)else Nil)
+	 
 	
-	def log(tr:Transaction) =
-		ts += tr
+	def log(poll: Int, tr: Transaction) = {
+		 if(!tsPerPoll.contains(poll))
+			 tsPerPoll += poll -> new ArrayBuffer[Transaction]()
+		 tsPerPoll(poll) += tr
+	 }
+	
+	def contains(poll: Int) = tsPerPoll.contains(poll)
+	
+	def allPolls = tsPerPoll.keySet
 }

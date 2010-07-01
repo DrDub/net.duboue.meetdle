@@ -13,10 +13,11 @@ class MeetdleServlet extends HttpServlet {
         if(action==null)
         	resp.getWriter().println("Hello, world");
         else if(action.equals("dump")){
-        	for(tr <- MemoryLogger.replay)
-        		resp.getWriter().println(tr.toString)
+        	for(p <- MemoryLogger.allPolls)
+        	  for(tr <- MemoryLogger.replay(p))
+        		  resp.getWriter().println(tr.toString)
         } else if(action.equals("poll")){
-        	val poll = engine.polls(req.getParameter("id").toInt)
+        	val poll = engine(req.getParameter("id").toInt)
        		resp.getWriter().println(poll.title+"\n\n"+poll.description)
         } else if(action.equals("do")){
             val tr=Transaction(req.getParameter("tr").split("\\s+").toList)
